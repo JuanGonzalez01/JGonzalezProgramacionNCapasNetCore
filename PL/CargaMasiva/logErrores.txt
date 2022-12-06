@@ -1,0 +1,8 @@
+
+Error Registro 1: Conversion failed when converting date and/or time from character string.
+Error Registro 2: String must be exactly one character long.
+Error Registro 3: Input string was not in a correct format.
+Error Registro 4: Violation of UNIQUE KEY constraint 'modEmail'. Cannot insert duplicate key in object 'dbo.Usuario'. The duplicate key value is (Gustavo4K, gustavo@gmail.com).
+Cannot insert the value NULL into column 'IdUsuario', table 'JGonzalezProgramacionNCapas.dbo.Direccion'; column does not allow nulls. INSERT fails.
+The statement has been terminated.
+The statement has been terminated.

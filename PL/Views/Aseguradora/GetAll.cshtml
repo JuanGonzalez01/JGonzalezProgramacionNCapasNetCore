@@ -1,0 +1,93 @@
+﻿@{
+    ViewBag.Title = "GetAll";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+@model ML.Aseguradora
+
+<div class="container">
+    <div class="row">
+        <div class="text-center">
+            <h2>Aseguradoras</h2>
+        </div>
+    </div>
+
+    <div class="row align-items-center">
+        <div class="col">
+            <h5>Bienvenidos a la pestaña Aseguradora</h5>
+            <p>Seleccione una aseguradora para editarla o "+"" para agregar.</p>
+        </div>
+
+        <div class="col" , style="float:right;">
+            <div style="float:right">
+                @Html.ActionLink("+", "Form", "Aseguradora", htmlAttributes: new { @class = "btn btn-success" })
+            </div>
+        </div>
+    </div>
+
+    <hr />
+
+    <div class="row">
+        <table class="table table-responsive table-hover align-middle" id="tablaAseguradora">
+
+            <thead class="table table-dark text-center">
+                <tr class="align-middle">
+                    <th>Editar</th>
+                    @*<th>ID</th>*@
+                    <th>Nombre</th>
+                    <th>Fecha de creación</th>
+                    <th>Fecha de modificación</th>
+                    <th>Usuario</th>
+                    <th>Eliminar</th>
+                </tr>
+            </thead>
+
+            <tbody>
+
+                @foreach (ML.Aseguradora aseguradora in Model.Aseguradoras)
+                {
+                    <tr>
+                        <td class="text-center"><a class="btn btn-warning" href="@Url.Action("Form", "Aseguradora", new {IdAseguradora = aseguradora.IdAseguradora})"><i class="bi bi-pencil-square"></i></a></td>
+                        @*<td>@aseguradora.IdAseguradora</td>*@
+                        <td>@aseguradora.Nombre</td>
+                        <td>@aseguradora.FechaCreacion</td>
+                        <td>@aseguradora.FechaModificacion</td>
+                        <td>@aseguradora.Usuario.Nombre @aseguradora.Usuario.ApellidoPaterno @aseguradora.Usuario.ApellidoMaterno</td>
+                        <td class="text-center"><a class="btn btn-danger" href="@Url.Action("Delete", "Aseguradora", new {IdAseguradora = aseguradora.IdAseguradora})" onclick="return confirm('¿Estás seguro que deseas eliminar la aseguradora?');"><i class="bi bi-trash-fill"></i></a></td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+
+</div>
+
+<hr />
+
+@section Scripts
+{
+
+<script src="https://code.jquery.com/jquery-3.5.1.js"></script>
+<script src="https://cdn.datatables.net/1.13.1/js/jquery.dataTables.min.js"></script>
+<script src="https://cdn.datatables.net/1.13.1/js/dataTables.material.min.js"></script>
+<script src="https://cdn.datatables.net/1.13.1/js/dataTables.bootstrap5.min.js"></script>
+
+<script>
+    $(document).ready(function () {
+        $('#tablaAseguradora').DataTable({
+            searching: false,
+            "lengthMenu": [[5, 10, 15, 20, -1], [5, 10, 15, 20, "Todos"]],
+            autoWidth: false,
+            columnDefs: [
+                {
+                    targets: ['_all'],
+                    className: 'mdc-data-table__cell',
+                },
+            ],
+            language: {
+                url: "//cdn.datatables.net/plug-ins/9dcbecd42ad/i18n/Spanish.json",
+            },
+         });
+    });
+</script>
+
+}

@@ -1,0 +1,145 @@
+﻿@model ML.Empresa
+@{
+    ViewBag.Title = "Form";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="container">
+    <h2>Formulario para Empresa</h2>
+
+    <div class="row">
+
+        <div class="col-md-12">
+
+            @using (Html.BeginForm("Form", "Empresa", FormMethod.Post, new { enctype = "multipart/form-data" }))
+            {
+                <div class="form-horizontal">
+                    <div class="row justify-content-md-center">
+                        <div class="form-group" style="display :none;">
+                            @Html.LabelFor(Model => Model.IdEmpresa, new { @class = "form-control" })
+                            @Html.TextBoxFor(Model => Model.IdEmpresa, new { @class = "form-control" })
+                            @Html.ValidationMessageFor(Model => Model.IdEmpresa)
+                        </div>
+
+                        <div class="col-md-4">
+                            <div class="form-group">
+                                @Html.LabelFor(Model => Model.Nombre)
+                                <div class="input-group">
+                                    <span class="input-group-text"><i class="bi bi-card-text"></i></span>
+                                    @Html.TextBoxFor(Model => Model.Nombre, new { @class = "form-control", @id = "txtNombre" })
+                                </div>
+                                @Html.ValidationMessageFor(Model => Model.Nombre)
+                                @Html.Label("",null, new {@id="lblNombre"})
+                            </div>
+
+                            <div class="form-group">
+                                @Html.LabelFor(Model => Model.Telefono)
+                                <div class="input-group">
+                                    <span class="input-group-text"><i class="bi bi-telephone-fill"></i></span>
+                                    @Html.TextBoxFor(Model => Model.Telefono, new { @class = "form-control", @id = "txtTelefono" })
+                                </div>
+                                @Html.ValidationMessageFor(Model => Model.Telefono)
+                                @Html.Label("",null, new {@id="lblTelefono"})
+                            </div>
+
+                            <div class="form-group">
+                                @Html.LabelFor(Model => Model.Email)
+                                <div class="input-group">
+                                    <span class="input-group-text"><i class="bi bi-envelope-fill"></i></span>
+                                    @Html.TextBoxFor(Model => Model.Email, new { @class = "form-control", @id = "txtEmail" })
+                                </div>
+                                @Html.ValidationMessageFor(Model => Model.Email)
+                                @Html.Label("",null, new {@id="lblEmail"})
+                            </div>
+
+                            <div class="form-group">
+                                @Html.LabelFor(Model => Model.DireccionWeb)
+                                <div class="input-group">
+                                    <span class="input-group-text"><i class="bi bi-globe"></i></span>
+                                    @Html.TextBoxFor(Model => Model.DireccionWeb, new { @class = "form-control", @id = "txtDireccionWeb" })
+                                </div>
+                                @Html.ValidationMessageFor(Model => Model.DireccionWeb)
+                                @Html.Label("",null, new {@id="lblDireccionWeb"})
+                            </div>
+                        </div>
+
+                        <div class="col-md-4">
+                            <div class="form-group">
+                                @Html.LabelFor(Model => Model.Logo)
+                            </div>
+                            <div class="form-group">
+                                @if (Model.Logo != null)
+                                {
+                                    <img id="ImagenPreview" src="data:image/*;base64,@Model.Logo" class="rounded mx-auto d-block" style="height:230px; width:230px;" />
+                                }
+                                else
+                                {
+                                    <img id="ImagenPreview" src="~/Imagenes/sinImagen.jpg" class="rounded mx-auto d-block" style="height:230px; width:230px;" />
+                                }
+                            </div>
+                            <br>
+                            <div class="form-group">
+                                <div class="input-group">
+                                    <span class="input-group-text"><i class="bi bi-image"></i></span>
+                                    <input type="file" id="IFLogo" name="IFLogo" class="form-control" onchange="validateFile(this), readURL(this);" />
+                                </div>
+                                @Html.ValidationMessageFor(Model => Model.Logo)
+                                @Html.Label("",null, new {@id="lblLogo"})
+                            </div>
+                            @Html.HiddenFor(Model => Model.Logo)
+                        </div>
+                    </div>
+                </div>
+                <br/>
+                <div class="row justify-content-md-center">
+
+                    <div class="col-md-auto">
+                        <input type="submit" value="Guardar" class="btn btn-success btn-lg" />
+                        @Html.ActionLink("Regresar", "GetAll", "Empresa", htmlAttributes: new { @class = "btn btn-danger btn-lg" })
+
+                    </div>
+                </div>
+            }
+        </div>
+    </div>
+</div>
+
+@section Scripts
+{
+<script src="~/lib/jquery/dist/jquery.js"></script>
+<script type="text/javascript">
+
+    function readURL(input) {
+        if (input.files && input.files[0]) {
+            var reader = new FileReader();
+            reader.onload = function (e) {
+                $('#ImagenPreview').attr('src', e.target.result)
+            };
+
+            reader.readAsDataURL(input.files[0]);
+        }
+    }
+
+    function validateFile(){
+        var allowedExtension = ['png', 'jpeg', 'jpg'];
+        var fileExtension = document.getElementById('IFLogo').value.split('.').pop().toLowerCase();
+        var isValidFile = false;
+
+        for(var index in allowedExtension) {
+            if(fileExtension === allowedExtension[index]) {
+                isValidFile = true;
+                break;
+            }
+        }
+        if(!isValidFile) {
+            alert('Las extensiones permitidas son : *.' + allowedExtension.join(', *.'));
+            document.getElementById('IFLogo').value = '';
+            document.getElementById("ImagenPreview").src="/Imagenes/sinImagen.jpg";
+        }
+
+        return isValidFile;
+    }
+
+
+</script>
+}

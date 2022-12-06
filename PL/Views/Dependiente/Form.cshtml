@@ -1,0 +1,200 @@
+﻿@model ML.Dependiente
+@{
+    ViewBag.Title = "Form";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="container">
+    <h2>Formulario para Dependiente</h2>
+
+    <div class="row justify-content-md-center">
+
+        <div class="col-md-12">
+
+            @using (Html.BeginForm("Form", "Dependiente", FormMethod.Post, new { enctype = "multipart/form-data" }))
+            {
+                <div class="form-horizontal">
+                    <div class="row justify-content-md-center">
+                        <div class="col-md-4">
+                            <div class="form-group" style="display :none;">
+                                @Html.LabelFor(Model => Model.IdDependiente)
+                                @Html.TextBoxFor(Model => Model.IdDependiente, new { @class = "form-control" , @id = "txtIdDependiente"})
+                                @Html.ValidationMessageFor(Model => Model.IdDependiente)
+                            </div>
+
+                            <div class="form-group">
+                                @Html.LabelFor(Model => Model.Empleado)
+                                <div class="input-group">
+                                    <span class="input-group-text"><i class="bi bi-card-text"></i></span>
+                                    @Html.DropDownListFor(model => model.Empleado.NumeroEmpleado, new SelectList(Model.Empleado.Empleados, "NumeroEmpleado", "Nombre"), "- Selecciona un empleado", new { @class = "form-control" })
+                                </div>
+                                @Html.ValidationMessageFor(Model => Model.Empleado.NumeroEmpleado)
+                                @Html.Label("",null, new {@id="lblNumeroEmpleado"})
+                            </div>
+
+                            <div class="form-group">
+                                @Html.LabelFor(Model => Model.Nombre)
+                                <div class="input-group">
+                                    <span class="input-group-text"><i class="bi bi-card-text"></i></span>
+                                    @Html.TextBoxFor(Model => Model.Nombre, new { @class = "form-control", @id = "txtNombre" })
+                                </div>
+                                @Html.ValidationMessageFor(Model => Model.Nombre)
+                                @Html.Label("",null, new {@id="lblNombre"})
+                            </div>
+
+                            <div class="form-group">
+                                @Html.LabelFor(Model => Model.ApellidoPaterno)
+                                <div class="input-group">
+                                    <span class="input-group-text"><i class="bi bi-card-text"></i></span>
+                                    @Html.TextBoxFor(Model => Model.ApellidoPaterno, new { @class = "form-control", @id = "txtApellidoPaterno" })
+                                </div>
+                                @Html.ValidationMessageFor(Model => Model.ApellidoPaterno)
+                                @Html.Label("",null, new {@id="lblApellidoPaterno"})
+                            </div>
+
+                            <div class="form-group">
+                                @Html.LabelFor(Model => Model.ApellidoMaterno)
+                                <div class="input-group">
+                                    <span class="input-group-text"><i class="bi bi-card-text"></i></span>
+                                    @Html.TextBoxFor(Model => Model.ApellidoMaterno, new { @class = "form-control", @id = "txtApellidoMaterno" })
+                                </div>
+                                @Html.ValidationMessageFor(Model => Model.ApellidoMaterno)
+                                @Html.Label("",null, new {@id="lblApellidoMaterno"})
+                            </div>
+
+                            <div class="form-group">
+                                @Html.LabelFor(Model => Model.FechaNacimiento)
+                                <div class="input-group">
+                                    <span class="input-group-text"><i class="bi bi-card-text"></i></span>
+                                    @Html.TextBoxFor(Model => Model.FechaNacimiento, new { @class = "form-control", @id = "txtFechaNacimiento" })
+                                </div>
+                                @Html.ValidationMessageFor(Model => Model.FechaNacimiento)
+                                @Html.Label("",null, new {@id="lblFechaNacimiento"})
+                            </div>
+                        </div>
+
+
+                        <div class="col-md-4">
+                            <div class="form-group">
+                                @Html.LabelFor(Model => Model.EstadoCivil)
+                                <div class="input-group">
+                                    <span class="input-group-text"><i class="bi bi-card-text"></i></span>
+                                    @Html.DropDownListFor(model => model.EstadoCivil.IdEstadoCivil, new SelectList(Model.EstadoCivil.EstadosCiviles, "IdEstadoCivil", "Nombre"), "- Selecciona el estado civil", new { @class = "form-control" })
+                                </div>
+                                @Html.ValidationMessageFor(Model => Model.EstadoCivil.IdEstadoCivil)
+                                @Html.Label("",null, new {@id="lblIdEstadoCivil"})
+                            </div>
+
+                            <div class="form-group">
+                                @Html.LabelFor(Model => Model.Sexo)
+                                <div class="row">
+                                    <div class="col-4">
+                                        @Html.RadioButtonFor(Model => Model.Sexo, "M")
+                                        Masculino
+                                    </div>
+                                    <div class="col-4">
+                                        @Html.RadioButtonFor(Model => Model.Sexo, "F")
+                                        Femenino
+                                    </div>
+                                </div>
+                                @Html.ValidationMessageFor(Model => Model.Sexo)
+                                @Html.Label("",null, new {@id="lblSexo"})
+                            </div>
+
+                            <div class="form-group">
+                                @Html.LabelFor(Model => Model.Telefono)
+                                <div class="input-group">
+                                    <span class="input-group-text"><i class="bi bi-card-text"></i></span>
+                                    @Html.TextBoxFor(Model => Model.Telefono, new { @class = "form-control", @id = "txtTelefono" })
+                                </div>
+                                @Html.ValidationMessageFor(Model => Model.Telefono)
+                                @Html.Label("",null, new {@id="lblTelefono"})
+                            </div>
+
+                            <div class="form-group">
+                                @Html.LabelFor(Model => Model.RFC)
+                                <div class="input-group">
+                                    <span class="input-group-text"><i class="bi bi-card-text"></i></span>
+                                    @Html.TextBoxFor(Model => Model.RFC, new { @class = "form-control", @id = "txtRFC" })
+                                </div>
+                                @Html.ValidationMessageFor(Model => Model.RFC)
+                                @Html.Label("",null, new {@id="lblRFC"})
+                            </div>
+
+                            <div class="form-group">
+                                @Html.LabelFor(Model => Model.DependienteTipo)
+                                <div class="input-group">
+                                    <span class="input-group-text"><i class="bi bi-card-text"></i></span>
+                                    @Html.DropDownListFor(model => model.DependienteTipo.IdDependienteTipo, new SelectList(Model.DependienteTipo.DependienteTipos, "IdDependienteTipo", "Nombre"), "- Selecciona el tipo de dependiente", new { @class = "form-control" })
+                                </div>
+                                @Html.ValidationMessageFor(Model => Model.DependienteTipo.IdDependienteTipo)
+                                @Html.Label("",null, new {@id="lblIdDependienteTipo"})
+                            </div>
+                        </div>
+
+
+                    </div>
+                    <br />
+
+                    <div class="row justify-content-md-center">
+                        <div class="col-md-auto">
+                            <input type="submit" value="Guardar" class="btn btn-success btn-lg" />
+                            @Html.ActionLink("Regresar", "GetAll", "Dependiente", htmlAttributes: new { @class = "btn btn-danger btn-lg" })
+                        </div>
+                    </div>
+                </div>
+            }
+        </div>
+    </div>
+</div>
+
+
+@section Scripts
+{
+<script src="~/lib/jquery/dist/jquery.js"></script>
+<link rel="stylesheet" href="//code.jquery.com/ui/1.13.1/themes/base/jquery-ui.css">
+<link rel="stylesheet" href="/resources/demos/style.css">
+<script src="https://code.jquery.com/jquery-3.6.0.js"></script>
+<script src="https://code.jquery.com/ui/1.13.1/jquery-ui.js"></script>
+<script type="text/javascript">
+
+    function readURL(input) {
+        if (input.files && input.files[0]) {
+            var reader = new FileReader();
+            reader.onload = function (e) {
+                $('#ImagenPreview').attr('src', e.target.result)
+            };
+
+            reader.readAsDataURL(input.files[0]);
+        }
+    }
+
+    $( function() {
+        $( "#txtFechaNacimiento" ).datepicker({dateFormat: 'dd-mm-yy',
+                                                changeMonth: true,
+                                                changeYear: true});
+    } );
+
+    function validateFile(){
+        var allowedExtension = ['png', 'jpeg', 'jpg'];
+        var fileExtension = document.getElementById('IFFoto').value.split('.').pop().toLowerCase();
+        var isValidFile = false;
+
+        for(var index in allowedExtension) {
+            if(fileExtension === allowedExtension[index]) {
+                isValidFile = true;
+                break;
+            }
+        }
+        if(!isValidFile) {
+            alert('Las extensiones permitidas son : *.' + allowedExtension.join(', *.'));
+            document.getElementById('IFFoto').value = '';
+            document.getElementById("ImagenPreview").src="/Imagenes/sinFoto.jpg";
+        }
+
+        return isValidFile;
+    }
+
+
+</script>
+}

@@ -1,0 +1,113 @@
+﻿@{
+    ViewData["Title"] = "GetAll";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+@model ML.Empleado
+
+<div class="container">
+    <div class="row">
+        <div class="text-center">
+            <h2>Empleados</h2>
+        </div>
+    </div>
+
+    <div class="row align-items-center">
+        <div class="col">
+            <h5>Bienvenidos a la pestaña Empleados</h5>
+            <p>Seleccione un empleado para editarlo o "+"" para agregar.</p>
+        </div>
+
+        <div class="col" , style="float:right;">
+            <div style="float:right">
+                @Html.ActionLink("+", "Form", "Empleado", htmlAttributes: new { @class = "btn btn-success" })
+            </div>
+        </div>
+    </div>
+
+    <hr />
+
+    <div class="row">
+        <table class="table table-responsive table-hover align-middle" id="tablaEmpleado">
+
+            <thead class="table table-dark text-center">
+                <tr>
+                    <th>Editar</th>
+                    @*<th>NumeroEmpleado</th>*@
+                    <th>RFC</th>
+                    <th>Nombre</th>
+                    <th>E-mail</th>
+                    <th>Teléfono</th>
+                    <th>Fecha de nacimiento</th>
+                    <th>NSS</th>
+                    <th>Fecha de ingreso</th>
+                    <th>Empresa</th>
+                    <th>Foto</th>
+                    <th>Eliminar</th>
+                </tr>
+            </thead>
+
+            <tbody>
+
+                @foreach (ML.Empleado empleado in Model.Empleados)
+                {
+                    <tr>
+                        <td class="text-center"><a class="btn btn-warning" href="@Url.Action("Form", "Empleado", new {NumeroEmpleado = empleado.NumeroEmpleado})"><i class="bi bi-pencil-square"></i></a></td>
+                        @*<td>@empleado.NumeroEmpleado</td>*@
+                        <td>@empleado.RFC</td>
+                        <td>@empleado.Nombre @empleado.ApellidoPaterno @empleado.ApellidoMaterno</td>
+                        <td>@empleado.Email</td>
+                        <td>@empleado.Telefono</td>
+                        <td>@empleado.FechaNacimiento</td>
+                        <td>@empleado.NSS</td>
+                        <td>@empleado.FechaIngreso</td>
+                        <td>@empleado.Empresa.Nombre</td>
+
+                        @if (empleado.Foto != null && empleado.Foto != "")
+                        {
+                            <td><img src="data:image/png;base64,@empleado.Foto" class="rounded mx-auto d-block" style="height:150px; width:120px;" /></td>
+                        }
+                        else
+                        {
+                            <td><img src="~/Imagenes/sinFoto.jpg" class="rounded mx-auto d-block" style="height:150px; width:120px;" /></td>
+                        }
+                        <td class="text-center"><a class="btn btn-danger" href="@Url.Action("Delete", "Empleado", new {NumeroEmpleado = empleado.NumeroEmpleado})" onclick="return confirm('¿Estás seguro que deseas eliminar el empleado?');"><i class="bi bi-trash-fill"></i></a></td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+
+</div>
+
+<hr />
+
+
+
+@section Scripts
+{
+
+<script src="https://code.jquery.com/jquery-3.5.1.js"></script>
+<script src="https://cdn.datatables.net/1.13.1/js/jquery.dataTables.min.js"></script>
+<script src="https://cdn.datatables.net/1.13.1/js/dataTables.material.min.js"></script>
+<script src="https://cdn.datatables.net/1.13.1/js/dataTables.bootstrap5.min.js"></script>
+
+<script>
+    $(document).ready(function () {
+        $('#tablaEmpleado').DataTable({
+            searching: false,
+            "lengthMenu": [[5, 10, 15, 20, -1], [5, 10, 15, 20, "Todos"]],
+            autoWidth: false,
+            columnDefs: [
+                {
+                    targets: ['_all'],
+                    className: 'mdc-data-table__cell',
+                },
+            ],
+            language: {
+                url: "//cdn.datatables.net/plug-ins/9dcbecd42ad/i18n/Spanish.json",
+            },
+         });
+    });
+</script>
+
+}

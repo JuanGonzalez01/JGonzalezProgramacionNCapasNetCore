@@ -1,0 +1,72 @@
+﻿@model ML.Aseguradora
+@{
+    ViewBag.Title = "Form";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="container">
+    <h2>Formulario para Aseguradora</h2>
+
+    <div class="row justify-content-md-center">
+
+        <div class="col-md-12">
+
+            @using (Html.BeginForm("Form", "Aseguradora", FormMethod.Post, new { enctype = "multipart/form-data" }))
+            {
+                <div class="form-horizontal">
+                    <div class="row justify-content-md-center">
+                        <div class="form-group" style="display :none;">
+                            @Html.LabelFor(Model => Model.IdAseguradora)
+                            @Html.TextBoxFor(Model => Model.IdAseguradora, new { @class = "form-control" })
+                            @Html.ValidationMessageFor(Model => Model.IdAseguradora)
+                        </div>
+
+                        <div class="form-group" style="display :none;">
+                            @Html.LabelFor(Model => Model.FechaCreacion)
+                            @Html.TextBoxFor(Model => Model.FechaCreacion, new { @class = "form-control", @id = "txtNombre" })
+                            @Html.ValidationMessageFor(Model => Model.FechaCreacion)
+                        </div>
+
+                        <div class="form-group" style="display :none;">
+                            @Html.LabelFor(Model => Model.FechaModificacion)
+                            @Html.TextBoxFor(Model => Model.FechaModificacion, new { @class = "form-control", @id = "txtNombre" })
+                            @Html.ValidationMessageFor(Model => Model.FechaModificacion)
+                        </div>
+
+                        <div class="col-md-4">
+                            <div class="form-group">
+                                @Html.LabelFor(Model => Model.Nombre)
+                                <div class="input-group">
+                                    <span class="input-group-text"><i class="bi bi-card-text"></i></span>
+                                    @Html.TextBoxFor(Model => Model.Nombre, new { @class = "form-control", @id = "txtNombre" })
+                                </div>
+                                @Html.ValidationMessageFor(Model => Model.Nombre)
+                                @Html.Label("",null, new {@id="lblNombre"})
+                            </div>
+
+                            <div class="form-group">
+                                @Html.LabelFor(Model => Model.Usuario)
+                                <div class="input-group">
+                                    <span class="input-group-text"><i class="bi bi-person-fill"></i></span>
+                                    @Html.DropDownListFor(model => model.Usuario.IdUsuario, new SelectList(Model.Usuario.Usuarios, "IdUsuario", "Nombre"), "- Selecciona un usuario", new { @class = "form-control" })
+                                </div>
+                                @Html.ValidationMessageFor(Model => Model.Usuario.IdUsuario)
+                                @Html.Label("",null, new {@id="lblIdUsuario"})
+                            </div>
+                        </div>
+                    </div>
+                    <br/>
+
+                    <div class="row justify-content-md-center">
+                        <div class="col-md-auto">
+                            <input type="submit" value="Guardar" class="btn btn-success btn-lg" />
+                            @Html.ActionLink("Regresar", "GetAll", "Aseguradora", htmlAttributes: new { @class = "btn btn-danger btn-lg" })
+                        </div>
+                    </div>                    
+                </div>
+            }
+        </div>
+    </div>
+</div>
+
+

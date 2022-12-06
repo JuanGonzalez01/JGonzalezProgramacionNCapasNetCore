@@ -1,0 +1,201 @@
+﻿@model ML.Result
+@{
+    ViewData["Title"] = "CargaMasiva";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h1>Carga Masiva</h1>
+<p>Seleccione con que tipo de archivo desea hacer la carga:</p>
+<hr />
+
+<div class="container">
+    <div class="row">
+        <div class="col-6">
+            <input type="submit" value="Excel" class="btn btn-success col-md-12" id="xlsx" name="xlsx" />
+        </div>
+        <div class="col-6">
+            <input type="submit" value="TXT" class="btn btn-warning col-md-12" id="txt" name="txt" />
+        </div>
+    </div>
+
+    @using (Html.BeginForm("CargaMasiva", "CargaMasiva", FormMethod.Post, new { enctype = "multipart/form-data" }))
+    {
+        <div class="row g-3" id="fuImage" style="display:none;">
+            <div class="col-md-6">
+                <br>
+                <div class="input-group">
+                    <span class="input-group-text" id="basic-addon1"><i class="bi bi-file-earmark-text-fill" style="color: lightseagreen"></i></span>
+                    <input type='file' class="form-control" name="FileExcel" id="FileExcel" onchange="validateFile()" />
+                </div>
+            </div>
+
+            @if (!Model.Correct)
+            {
+                <div class="row g-3">
+                    <div class"col-md-1">
+                        <a><input type="submit" value="Procesar" class="btn btn-success" /></a>
+                        <br />
+                    </div>
+                </div>
+            }
+            else
+            {
+                <div class="row g-3">
+                    <div class"col-md-1">
+                        <a><input type="submit" value="Insertar" class="btn btn-success" /></a>
+                        <br />
+                    </div>
+                </div>
+            }
+        </div>
+        <br />
+    }
+</div>
+
+<div class="row">
+    <div class="col-md-12">
+        @if (Model.Objects != null) //Si la lista de errores del result que se retorna esta creada
+        {
+            @if (Model.Objects.Count > 0) //si la lista de errores tiene info
+            {
+                <table class="table table-bordered table-responsive">
+                    <thead>
+                        <tr class="text-center">
+                            <td>IdRegistro</td>
+                            <td>Error</td>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (ML.ErrorMasivo error in Model.Objects)
+                        {
+                            <tr class="text-center">
+                                <td>@error.IdRegistro</td>
+                                <td>@error.Mensaje</td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            }
+        }
+        else
+        {
+
+        }
+    </div>
+</div>
+
+@*<div class="container">
+    @using (Html.BeginForm("CargarTXT", "CargaMasiva", FormMethod.Post, new { enctype = "multipart/form-data" }))
+    {
+    <div class="row">
+    <div class="col-6">
+    <div class="d-grid gap-2">
+    <button type="button" class="btn btn-outline-warning btn-lg" onclick="mostrarTXT();">TXT</button>
+    <input type="file" id="FileTXT" name="FileTXT" style="display:none;" onchange="return validacionTXT()" />
+    <input type="submit" value="Subir" class="btn btn-primary" id="SubirTXT" name="SubirTXT" style="display:none;" />
+    </div>
+    </div>
+    <div class="col-6">
+    <div class="d-grid gap-2">
+    <button type="button" class="btn btn-outline-success btn-lg" onclick="mostrarExcel();">Excel</button>
+    <input type="file" id="FileExcel" name="FileExcel" style="display:none;" onchange="return validacionExcel()" />
+    <input type="submit" value="Subir" class="btn btn-primary" id="SubirExcel" name="SubirExcel" style="display:none;" />
+    </div>
+    </div>
+    </div>
+    }
+    </div>*@
+
+
+@section Scripts
+{
+<script src="~/lib/jquery/dist/jquery.js"></script>
+<link rel="stylesheet" href="//code.jquery.com/ui/1.13.2/themes/base/jquery-ui.css">
+<link rel="stylesheet" href="/resources/demos/style.css">
+<script type="text/javascript">
+
+    $('#xlsx').click(function() {
+        $('#fuImage').toggle('slow', function() {
+        });
+    });
+
+    function validateFile(){
+        var allowedExtension = ['xlsx'];
+        var fileExtension = document.getElementById('FileExcel').value.split('.').pop().toLowerCase();
+        var isValidFile = false;
+
+        for(var index in allowedExtension) {
+            if(fileExtension === allowedExtension[index]) {
+                isValidFile = true;
+                break;
+            }
+        }
+        if(!isValidFile) {
+            alert('Seleccionar un archivo válido de Excel (.xlsx).');
+            document.getElementById('FileExcel').value = '';
+        }
+
+        return isValidFile;
+    }
+
+    //function mostrarTXT() {
+    //    inputTXT = document.getElementById('FileTXT');
+    //    inputTXT.style.display = '';
+
+    //    inputExcel = document.getElementById('FileExcel');
+    //    inputExcel.value = '';
+    //    inputExcel.style.display = 'none';
+
+    //    buttonExcel = document.getElementById('SubirExcel');
+    //    buttonExcel.style.display = 'none';
+    //}
+
+    //function mostrarExcel() {
+    //    inputExcel = document.getElementById('FileExcel');
+    //    inputExcel.style.display = '';
+
+    //    inputTXT = document.getElementById('FileTXT');
+    //    inputTXT.style.display = 'none';
+    //    inputTXT.value = '';
+
+    //    buttonTXT = document.getElementById('SubirTXT');
+    //    buttonTXT.style.display = 'none';
+    //}
+
+    //function validacionTXT(){
+    //    var fileInput = document.getElementById('FileTXT');
+    //    var filePath = fileInput.value;
+    //    var allowedExtensions = /(.txt)$/i;
+    //    if(!allowedExtensions.exec(filePath)){
+    //        alert('Error: Seleccione un archivo con extensión: .txt');
+    //        fileInput.value = '';
+    //        buttonTXT = document.getElementById('SubirTXT');
+    //        buttonTXT.style.display = 'none';
+    //        return false;
+    //    }else{
+    //        //Image preview
+    //        buttonTXT = document.getElementById('SubirTXT');
+    //        buttonTXT.style.display = '';
+    //    }
+    //}
+
+    //function validacionExcel(){
+    //    var fileInput = document.getElementById('FileExcel');
+    //    var filePath = fileInput.value;
+    //    var allowedExtensions = /(.xlsx|.xls)$/i;
+    //    if(!allowedExtensions.exec(filePath)){
+    //        alert('Error: Seleccione un archivo válido de Excel.');
+    //        fileInput.value = '';
+    //        buttonExcel = document.getElementById('SubirExcel');
+    //        buttonExcel.style.display = 'none';
+    //        return false;
+    //    }else{
+    //        //Image preview
+    //        buttonExcel = document.getElementById('SubirExcel');
+    //        buttonExcel.style.display = '';
+    //    }
+    //}
+
+
+</script>
+}

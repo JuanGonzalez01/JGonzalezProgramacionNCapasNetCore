@@ -1,0 +1,15 @@
+== No se insertó el Usuario con nombre: David Ortiz Ramirez | Error: Violation of UNIQUE KEY constraint 'modEmail'. Cannot insert duplicate key in object 'dbo.Usuario'. The duplicate key value is (DavidHD, david@gmail.com).
+Cannot insert the value NULL into column 'IdUsuario', table 'JGonzalezProgramacionNCapas.dbo.Direccion'; column does not allow nulls. INSERT fails.
+The statement has been terminated.
+The statement has been terminated. 
+
+== No se insertó el Usuario con nombre: Adrian Aguilar Angeles | Error: Violation of UNIQUE KEY constraint 'modEmail'. Cannot insert duplicate key in object 'dbo.Usuario'. The duplicate key value is (Adrian4K, adrian@gmail.com).
+Cannot insert the value NULL into column 'IdUsuario', table 'JGonzalezProgramacionNCapas.dbo.Direccion'; column does not allow nulls. INSERT fails.
+The statement has been terminated.
+The statement has been terminated. 
+
+== No se insertó el Usuario con nombre: Damaris Gonzalez Carrera | Error: Violation of UNIQUE KEY constraint 'modEmail'. Cannot insert duplicate key in object 'dbo.Usuario'. The duplicate key value is (Damaris4K, damaris@gmail.com).
+Cannot insert the value NULL into column 'IdUsuario', table 'JGonzalezProgramacionNCapas.dbo.Direccion'; column does not allow nulls. INSERT fails.
+The statement has been terminated.
+The statement has been terminated. 
+
