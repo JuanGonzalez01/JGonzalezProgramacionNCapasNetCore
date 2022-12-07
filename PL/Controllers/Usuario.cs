@@ -224,7 +224,42 @@ namespace PL.Controllers
             return Json(result);
         }
 
+        [HttpGet]
+        public ActionResult Login()
+        {
+            return View();
+        }
 
+        [HttpPost]
+        public ActionResult Login (ML.Login login)
+        {
+            ML.Result result = BL.Usuario.GetByUserName(login.UserName);
+
+            if (result.Correct)
+            {
+                ML.Usuario usuario = (ML.Usuario)result.Object;
+                if (usuario.Password == login.Password)
+                {
+                    return RedirectToAction("GetAll", "Usuario");
+                }
+                else
+                {
+                    ViewBag.Message = "El nombre de usuario y/o contraseña son incorrectos.";
+                    ViewBag.Login = false;
+
+                    return PartialView("Modal");
+                }
+            }
+            else
+            {
+                ViewBag.Message = "El nombre de usuario y/o contraseña son incorrectos.";
+                ViewBag.Login = false;
+
+                return PartialView("Modal");
+            }
+
+            return View();
+        }
 
 
         public ML.Result GetAllAPI(ML.Usuario usuario)

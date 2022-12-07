@@ -14,8 +14,15 @@
                 <h5>@ViewBag.Message</h5>
             </div>
             <div class="modal-footer">
+                @if (ViewBag.Login)
+                {
+                    @Html.ActionLink("Aceptar", "GetAll", "Usuario", htmlAttributes: new { @class = "btn btn-danger" })
+                }
+                else
+                {
+                    @Html.ActionLink("Aceptar", "Login", "Usuario", htmlAttributes: new { @class = "btn btn-danger" })
+                }
 
-                @Html.ActionLink("Aceptar", "GetAll", "Usuario", htmlAttributes: new { @class = "btn btn-danger" })
             </div>
         </div>
     </div>

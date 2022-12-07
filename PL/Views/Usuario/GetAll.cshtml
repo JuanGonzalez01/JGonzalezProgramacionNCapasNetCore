@@ -98,7 +98,7 @@
                         {
                             <td>
                                 <div class="form-check form-switch">
-                                    <input class="form-check-input" type="checkbox" id="flexSwitchCheckDefault" checked onchange="ChangeStatus(@usuario.IdUsuario, false)">
+                                    <input class="form-check-input" type="checkbox" id="flexSwitchCheckDefault" checked onchange="ChangeStatus(@usuario.IdUsuario, this)">
                                 </div>
                             </td>
                         }
@@ -106,7 +106,7 @@
                         {
                             <td>
                                 <div class="form-check form-switch">
-                                    <input class="form-check-input" type="checkbox" id="flexSwitchCheckDefault" onchange="ChangeStatus(@usuario.IdUsuario, true)">
+                                    <input class="form-check-input" type="checkbox" id="flexSwitchCheckDefault" onchange="ChangeStatus(@usuario.IdUsuario, this)">
                                 </div>
                             </td>
                         }
@@ -157,7 +157,8 @@
          });
     });
 
-    function ChangeStatus(idUsuario, status){
+    function ChangeStatus(idUsuario, e){
+        var status = e.checked
         $.ajax({
             type: 'POST',
             url: '@Url.Action("CambiarStatus")',

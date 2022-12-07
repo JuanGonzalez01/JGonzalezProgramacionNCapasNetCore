@@ -174,6 +174,42 @@ namespace BL
             return result;
         }
 
+        public static ML.Result GetByUserName(string userName)
+        {
+            ML.Result result = new ML.Result();
+
+            try
+            {
+                using (DL.JgonzalezProgramacionNcapasContext context = new DL.JgonzalezProgramacionNcapasContext())
+                {
+                    var query = context.Usuarios.FromSqlRaw($"UsuarioGetByUsername '{userName}'").AsEnumerable().FirstOrDefault();
+
+                    if (query != null)
+                    {
+                        ML.Usuario usuario = new ML.Usuario();
+
+                        usuario.UserName = query.UserName;
+                        usuario.Password = query.Password;
+
+                        result.Object = usuario;
+                        result.Correct = true;
+                    }
+                    else
+                    {
+                        result.Correct = false;
+                        result.ErrorMessage = "No se encontró el registro.";
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                result.Correct = false;
+                result.Ex = ex;
+                result.ErrorMessage = ex.Message;
+            }
+            return result;
+        }
+
         public static ML.Result GetAll(ML.Usuario usuarioBusqueda)
         {
             ML.Result result = new ML.Result();
@@ -217,6 +253,7 @@ namespace BL
                             usuario.Rol.IdRol = row.IdRol;
                             usuario.Rol.Nombre = row.RolNombre;
                             usuario.Imagen = row.Imagen;
+                            usuario.Status = row.Status;
 
                             usuario.Direccion = new ML.Direccion();
                             usuario.Direccion.IdDireccion = row.IdDireccion;
@@ -439,7 +476,7 @@ namespace BL
             {
                 using (DL.JgonzalezProgramacionNcapasContext context = new DL.JgonzalezProgramacionNcapasContext())
                 {
-                    var query = context.Database.ExecuteSqlRaw($"UsuarioChangeStatus {idUsuario}, '{status}'");
+                    var query = context.Database.ExecuteSqlRaw($"UsuarioChangeStatus {idUsuario}, {status}");
 
                     if (query > 0)
                     {
@@ -448,7 +485,7 @@ namespace BL
                     else
                     {
                         result.Correct = false;
-                        result.ErrorMessage = "No se actuazlizó el registro";
+                        result.ErrorMessage = "No se realizó la acción.";
                     }
                 }
             }
